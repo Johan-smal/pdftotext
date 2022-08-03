@@ -1,0 +1,8 @@
+node_modules/
+.s3/
+.serverless/
+.webpack/
+statements/
+poppler/
+**.code-workspace
+.DS_Store

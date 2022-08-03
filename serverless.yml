@@ -1,0 +1,51 @@
+service: pdftotext
+
+provider:
+  name: aws
+  stage: ${opt:stage, self:custom.defaultStage}
+  runtime: nodejs14.x
+  region: eu-west-1
+  environment:
+    STATEMENTS_BUCKET: ${self:service}-${opt:stage, self:provider.stage}-bank-statements
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
+
+plugins:
+  - serverless-webpack
+  - serverless-s3-local
+  - serverless-offline
+
+custom:
+  defaultStage: dev
+  s3:
+    host: localhost
+    directory: ./.s3
+
+functions:
+  app:
+    handler: src/handlers/app.handler
+    memorySize: 512
+    layers:
+      - ${env:POPPLER_LAYER}
+    events:
+      - s3: ${self:provider.environment.STATEMENTS_BUCKET}
+        event: s3:*
+    # events:
+    #   - http:
+    #       method: ANY
+    #       path: "/"
+    #       cors: true
+    #   - http:
+    #       method: ANY
+    #       path: "/{proxy+}"
+    #       cors: true
+
+# resources:
+#   Resources:
+#     StatementBucket:
+#       Type: AWS::S3::Bucket
+#       Properties:
+#         BucketName: ${self:provider.environment.STATEMENTS_BUCKET}
