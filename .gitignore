@@ -4,5 +4,13 @@ node_modules/
 .webpack/
 statements/
 poppler/
+dist/
+bin/
+lib/
+.volume/
+share/
+var/
+etc/
+statement.pdf
 **.code-workspace
 .DS_Store

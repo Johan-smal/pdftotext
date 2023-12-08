@@ -23,12 +23,10 @@ export class PDFToText
   constructor(config: PdfConfig) {
     this.fileName = config.filename;
     this.fileData = config.data;
-    this.filePath = (IS_OFFLINE)
-      ? path.join(path.basename(this.fileName))
-      : path.join(os.tmpdir(), path.basename(this.fileName))
+    this.filePath = path.join(os.tmpdir(), path.basename(this.fileName))
     // this.filePath = path.join(path.basename(this.fileName));
     this.execPath = (IS_OFFLINE)
-      ? 'pdftotext'
+      ? '/var/task/bin/pdftotext'
       : '/opt/bin/pdftotext';
   }
 

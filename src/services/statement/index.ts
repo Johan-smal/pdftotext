@@ -40,6 +40,12 @@ export class Statement {
     this.processor = new bank.Processor(this.pages)
   }
 
+  public getPages() : XpathDocument[] {
+    if (!this.processor) throw new Error('Initialize')
+
+    return this.processor.getPages()
+  }
+
   public getTransactions() : any {
     if (!this.processor) throw new Error('Initialize')
 

@@ -8,13 +8,15 @@ export function identifier(pages: XpathDocument[]) : boolean {
 }
 
 export class Processor extends StatementProcessor {
+  public getPages(): XpathDocument[] {
+    return this.pages
+  }
+
   public getTransactions(): Transaction[] {
-    const [page] = this.pages;
-    const [node] = page.select('//word[contains(., "SIMON")]')
     return [{
       date: new Date(),
       type: TransactionType.CREDIT,
-      description: node.textContent || 'NO TEXT',
+      description: 'NO TEXT',
       amount: 13000,
       balance: 20000,
     }]
